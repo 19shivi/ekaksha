@@ -30,7 +30,7 @@
              notification message. See README(https://goo.gl/6BKBk7) for more.
         -->
 
-
+         <service android:name=".BroadcastService"/>
         <activity android:name=".JoinClassroom" />
         <activity android:name=".CreateClassroom" />
         <activity android:name=".RegisterActivity" />

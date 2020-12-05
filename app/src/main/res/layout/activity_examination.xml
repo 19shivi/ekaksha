@@ -40,6 +40,12 @@
             android:text="Computer Exam"
             android:textAlignment="center"
             android:textSize="34sp" />
+        <TextView android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="90:00"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/maintimer"
+            android:textSize="24sp"/>
 
         <Button
             android:layout_width="match_parent"
@@ -47,19 +53,7 @@
             android:layout_margin="8sp"
             android:textColor="#03DAC5" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8sp"
-                android:layout_weight="1"
-                android:text="60:00"
-                android:textSize="24sp" />
-        </LinearLayout>
 
         <TextView
             android:layout_width="match_parent"

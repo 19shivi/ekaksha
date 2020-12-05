@@ -15,6 +15,10 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -28,6 +32,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.util.Size;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -51,12 +56,15 @@ public class ExaminationActivity extends AppCompatActivity implements CameraXCon
     private PreviewView previewView;
     private FaceNetModel model;
     private HashMap<String, float[]> registered = new HashMap<>();
+    private TextView timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_examination);
         start();
+
+        startService(new Intent(this, BroadcastService.class));
         previewView = (PreviewView) findViewById(R.id.camera_preview);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
@@ -69,6 +77,13 @@ public class ExaminationActivity extends AppCompatActivity implements CameraXCon
             }
         }, ContextCompat.getMainExecutor(this));
     }
+    private BroadcastReceiver br = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.v("updated","called");
+            updateGUI(intent); // or whatever method used to update your GUI fields
+        }
+    };
     void bindPreview(@NonNull ProcessCameraProvider cameraProvider) {
         Preview preview = new Preview.Builder()
                 .build();
@@ -264,6 +279,40 @@ public class ExaminationActivity extends AppCompatActivity implements CameraXCon
 
         return ret;
 
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        registerReceiver(br, new IntentFilter(BroadcastService.COUNTDOWN_BR));
+        Log.i("timer", "Registered broacast receiver");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        unregisterReceiver(br);
+        Log.i("timer", "Unregistered broacast receiver");
+    }
+
+    @Override
+    public void onStop() {
+        try {
+            unregisterReceiver(br);
+        } catch (Exception e) {
+            // Receiver was probably already stopped in onPause()
+        }
+        super.onStop();
+    }
+    private void updateGUI(Intent intent) {
+        if (intent.getExtras() != null) {
+            long millisUntilFinished = intent.getLongExtra("countdown", 0);
+            if (millisUntilFinished == 0)
+                stopService(new Intent(this, BroadcastService.class));
+            timer=(TextView)findViewById(R.id.maintimer) ;
+            timer.setText(millisUntilFinished+"");
+            //timer.setText(millisUntilFinished/60+":"+millisUntilFinished%60);
+            Log.i("timer", "Countdown seconds remaining: " + millisUntilFinished / 1000);
+        }
     }
 
 

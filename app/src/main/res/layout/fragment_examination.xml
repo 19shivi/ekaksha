@@ -6,15 +6,10 @@
     android:background="#abc123"
     tools:context=".Examination_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/examination_Fragment"
-        android:text="hello_examination_fragment" />
-    <include layout="@layout/examination_listitem"></include>
+
     <ListView
         android:layout_width="match_parent"
+        android:id="@+id/examination_listview"
         android:layout_height="wrap_content"
         android:dividerHeight="16sp"
         tools:listitem="@layout/examination_listitem">

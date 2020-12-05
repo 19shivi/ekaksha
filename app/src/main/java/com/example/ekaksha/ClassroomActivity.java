@@ -228,7 +228,7 @@ public class ClassroomActivity extends AppCompatActivity {
                     values.put(ClassroomContract.ExaminationList.COLUMN_END, String.valueOf(examination.getDuration()));
 
 
-                    db.insert(ClassroomContract.AssignmentList.JOINED_TABLE_NAME + user.getUid(), null, values);
+                    db.insert(ClassroomContract.ExaminationList.JOINED_TABLE_NAME + user.getUid(), null, values);
                     cursor_query.close();
 
 
