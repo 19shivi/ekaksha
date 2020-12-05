@@ -7,14 +7,8 @@
     android:layout_marginBottom="56dp"
     tools:context=".Classroom_fragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:id="@+id/fragmentText"
-        android:text="hello_Classroom_fragment"
-        />
+
     <ListView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"

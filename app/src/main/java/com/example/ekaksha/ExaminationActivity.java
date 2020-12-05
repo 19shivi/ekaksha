@@ -23,7 +23,9 @@ import android.graphics.YuvImage;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
+import android.util.Pair;
 import android.util.Size;
 import android.view.View;
 
@@ -37,18 +39,24 @@ import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 public class ExaminationActivity extends AppCompatActivity implements CameraXConfig.Provider {
     private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
     private PreviewView previewView;
+    private FaceNetModel model;
+    private HashMap<String, float[]> registered = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_examination);
+        start();
         previewView = (PreviewView) findViewById(R.id.camera_preview);
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
         cameraProviderFuture.addListener(() -> {
@@ -111,6 +119,26 @@ public class ExaminationActivity extends AppCompatActivity implements CameraXCon
 
 
                         }
+                        else if (registered.size() > 0) {
+                            float[] embiddings = model.getFaceEmbedding(bitmap1, firebaseVisionFaces.get(0).getBoundingBox(), false);
+                            //LOGGER.i("dataset SIZE: " + registered.size());
+                            final Pair<String, Float> nearest = findNearest(embiddings);
+                            if (nearest != null) {
+
+                                final String name = nearest.first;
+                                label[0] = name;
+                                if(name.equals("shivam"))
+                                    findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
+                                else
+                                    findViewById(R.id.linearLayout).setVisibility(View.INVISIBLE);
+
+                                distance[0] = nearest.second;
+
+                                Log.v("result", label[0] + distance[0]);
+
+
+                            }
+                        }
                         else
                             findViewById(R.id.linearLayout).setVisibility(View.VISIBLE);
 
@@ -163,4 +191,80 @@ public class ExaminationActivity extends AppCompatActivity implements CameraXCon
         byte[] imageBytes = out.toByteArray();
         return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
     }
+    public void start()
+    {
+        FaceDetectorOptions accurateOps = new FaceDetectorOptions.Builder()
+                .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+                .build();
+        model = new FaceNetModel(getBaseContext());
+        try {
+            File imagesDir = new File(Environment.getExternalStorageDirectory().getAbsoluteFile() + "/images");
+            File[] imageSubDirs = imagesDir.listFiles();
+            for (File file : imageSubDirs) {
+                for (File imagename : file.listFiles()) {
+                    String path = imagename.getAbsolutePath();
+                    Log.v("path", path);
+                    Bitmap bitmap = BitmapFactory.decodeFile(path);
+                    //  Bitmap finalBitmap=Bitmap.createScaledBitmap(bitmap,360,360,false);
+                    Log.v("shivam", "gupta");
+                    InputImage inputImage = InputImage.fromBitmap(bitmap, 0);
+                    Log.v("shivam", "gupta111");
+                    FaceDetector detector = FaceDetection.getClient(accurateOps);
+
+                    detector.process(inputImage).addOnSuccessListener(new OnSuccessListener<List<Face>>() {
+                        @Override
+                        public void onSuccess(List<Face> faces) {
+                            Log.v("storage sizes", "w1jd" + faces.size());
+                            if (faces.size() == 1) {
+
+                                float[] embiddings = model.getFaceEmbedding(bitmap, faces.get(0).getBoundingBox(), true);
+                                //   float[] embiddings =onFacesDetected(bitmap,faces.get(0));
+                              //  registered.put(file.getName(), embiddings);
+                                Log.v("filename", file.getName());
+                                registered.put(file.getName(), embiddings);
+                                detector.close();
+
+
+                            }
+                        }
+                    });
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+        //  frameAnalyser=new FrameAnalyser(this,button);
+
+
+    }
+    private Pair<String, Float> findNearest(float[] emb) {
+
+        Pair<String, Float> ret = null;
+        for (Map.Entry<String, float[]> entry : registered.entrySet()) {
+            final String name = entry.getKey();
+            final float[] knownEmb = ((float[]) entry.getValue());
+
+            float distance = 0;
+            for (int i = 0; i < emb.length; i++) {
+                float diff = emb[i] - knownEmb[i];
+                distance += diff*diff;
+            }
+            distance = (float) Math.sqrt(distance);
+            if (ret == null || distance < ret.second) {
+                ret = new Pair<>(name, distance);
+            }
+        }
+
+        return ret;
+
+    }
+
+
 }

@@ -3,10 +3,19 @@ package com.example.ekaksha.Data;
 public class Assignment {
     private String classroomID;
     private String classroomName;
+    private long Id;
     private String name;
     private String description;
     private  String url;
-    private long deadline;
+    private String deadline;
+
+    public void setId(long id) {
+        Id = id;
+    }
+
+    public long getId() {
+        return Id;
+    }
 
     public String getClassroomID() {
         return classroomID;
@@ -32,11 +41,11 @@ public class Assignment {
         this.classroomName = classroomName;
     }
 
-    public long getDeadline() {
+    public String getDeadline() {
         return deadline;
     }
 
-    public void setDeadline(long deadline) {
+    public void setDeadline(String deadline) {
         this.deadline = deadline;
     }
 

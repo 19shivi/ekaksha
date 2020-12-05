@@ -21,6 +21,7 @@ public final class ClassroomContract {
         public final static String COLUMN_NAME="name";
         public final static String COLUMN_DESCRIPTION="description";
         public final static String COLUMN_CLASSROOM_ID="classroomId";
+        public final static String COLUMN_ASSIGNMENT_ID="assignmnetId";
         public final static String COLUMN_CLASSROOM_NAME="classroomName";
         public final static String COLUMN_URL="assignmentUrl";
         public final static String COLUMN_DEADLINE="deadline";

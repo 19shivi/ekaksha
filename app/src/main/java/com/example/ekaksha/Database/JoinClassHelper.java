@@ -41,6 +41,7 @@ public class JoinClassHelper extends SQLiteOpenHelper {
         SQL_CREATE_TABLE_ASSIGNMENT="CREATE TABLE "+ ClassroomContract.AssignmentList.JOINED_TABLE_NAME+ user +" (" +
                 ClassroomContract.AssignmentList._ID+" INTEGER PRIMARY KEY,"+
                 ClassroomContract.AssignmentList.COLUMN_CLASSROOM_ID+ " TEXT,"+
+                ClassroomContract.AssignmentList.COLUMN_ASSIGNMENT_ID+ " TEXT,"+
                 ClassroomContract.AssignmentList.COLUMN_CLASSROOM_NAME+ " TEXT,"+
                 ClassroomContract.AssignmentList.COLUMN_NAME+ " TEXT,"+
                 ClassroomContract.AssignmentList.COLUMN_DESCRIPTION+ " TEXT,"+

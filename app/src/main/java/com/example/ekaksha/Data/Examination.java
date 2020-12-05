@@ -3,11 +3,20 @@ package com.example.ekaksha.Data;
 public class Examination {
     private String classroomID;
     private String classroomName;
+    private String name;
     private String description;
     private  String url;
-    private long timeStart;
-    private long timeEnd;
+    private String timeStart;
+    private int duration;
     private int maximumMarks;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     public void setMaximumMarks(int maximumMarks) {
         this.maximumMarks = maximumMarks;
@@ -37,20 +46,20 @@ public class Examination {
         this.description = description;
     }
 
-    public long getTimeEnd() {
-        return timeEnd;
-    }
-
-    public long getTimeStart() {
-        return timeStart;
-    }
-
-    public void setTimeEnd(long timeEnd) {
-        this.timeEnd = timeEnd;
-    }
-
-    public void setTimeStart(long timeStart) {
+    public void setTimeStart(String timeStart) {
         this.timeStart = timeStart;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
     }
 
     public String getUrl() {

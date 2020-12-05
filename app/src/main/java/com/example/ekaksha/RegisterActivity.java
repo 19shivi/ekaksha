@@ -56,14 +56,16 @@ public class RegisterActivity extends AppCompatActivity {
                 EditText textView2=(EditText)findViewById(R.id.register_confirm) ;
                 EditText name=(EditText)findViewById(R.id.register_name);
                 username = textView.getText();
-                final Editable passward = textView1.getText();
-                final Editable confirm = textView2.getText();
+                 Editable passward = textView1.getText();
+                 Editable confirm = textView2.getText();
 
                 if (!isValid(username.toString())) {
                     answer.setText("Enter a valid E-mail Id");
                 } else if (passward.length() < 8) {
                     answer.setText("Passward must have atleast 8 characters");
-                } else if (!passward.equals(confirm)) {
+                } else if (!passward.toString().equals(confirm.toString())) {
+                    Log.v("a",passward.toString());
+                    Log.v("b",confirm.toString());
                     answer.setText("Passward Not matches");
                 }
                 else if(name.getText().length()<2 || name.getText().toString().matches("\\d"))

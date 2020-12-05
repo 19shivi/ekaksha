@@ -62,6 +62,7 @@ public class Classroom_fragment extends Fragment {
                 if(cursor != null) {
                     Intent intent = new Intent(getActivity(), ClassroomActivity.class) ;
                     intent.putExtra("name",cursor.getString(cursor.getColumnIndex("name")));
+                    intent.putExtra("id",cursor.getString(cursor.getColumnIndex("classroomId")));
                     startActivity(intent);
                 }
             }
