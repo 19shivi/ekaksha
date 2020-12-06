@@ -20,38 +20,50 @@
         style="@style/parent">
 
         <EditText
-            android:layout_weight="1"
             android:id="@+id/editTextEmail"
-            android:layout_height="24sp"
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
-            android:hint="@string/no_of_questions"
+            android:hint="no of questions"
             android:inputType="number"
             android:backgroundTint="@color/whiteCardColor"
             android:maxLines="1"/>
     </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/button"
-            android:layout_weight="1"
+
             style="@style/parent">
+
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_height="24sp"
                 android:layout_width="match_parent"
-                android:backgroundTint="@color/whiteCardColor">
-                <EditText
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:text="Starting time"
-                    android:layout_width="match_parent"
-                    android:layout_height="24sp"/>
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/whiteCardColor"
+                android:orientation="vertical">
+
                 <TextView
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    android:text="Ending time"
+                    android:id="@+id/maintimer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="90:00"
+                    android:layout_gravity="center_horizontal"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    />
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="24sp"/>
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/whiteCardColor"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/b11"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Start"
+                        android:textSize="16sp"/>
                 </LinearLayout>
+            </LinearLayout>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/Input"
@@ -59,7 +71,7 @@
             style="@style/parent">
             <EditText
                 android:id="@+id/Option1"
-                android:text="question 1"
+                android:hint="question 1"
                 style="@style/modifiedEditText"
                 android:textSize="16sp"
                 android:backgroundTint="@color/whiteCardColor"
@@ -76,7 +88,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textSize="16sp"
-                android:text="Option A Java"
+                android:hint="Option A Java"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -88,7 +100,7 @@
                 style="@style/modifiedEditText"
                 android:backgroundTint="@color/whiteCardColor"
                 android:inputType="text"
-                android:text="Option B Python"
+                android:hint="Option B Python"
                 android:textSize="16sp"
                 android:maxLines="1"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -101,7 +113,7 @@
                 style="@style/modifiedEditText"
                 android:backgroundTint="@color/whiteCardColor"
                 android:inputType="number"
-                android:text="Option C R"
+                android:hint="Option C R"
                 android:textSize="16sp"
                 android:maxLines="1"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -114,13 +126,13 @@
                 style="@style/modifiedEditText"
                 android:backgroundTint="@color/whiteCardColor"
                 android:inputType="number"
-                android:text="Option D C++"
+                android:hint="Option D C++"
                 android:textSize="16sp"
                 android:maxLines="1"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
-           android:layout_weight="1"
+            android:layout_weight="1"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
@@ -130,7 +142,6 @@
             <Button
                 android:layout_marginTop="16sp"
                 android:layout_marginLeft="8sp"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -142,7 +153,6 @@
             <Button
                 android:layout_marginTop="16sp"
                 android:layout_marginRight="8sp"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
